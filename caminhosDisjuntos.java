@@ -1,7 +1,10 @@
-import java.io.*;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
-public class caminhosDijuntos {
+class caminhosDisjuntos {
 
     private Map<Integer, List<Integer>> adjacencias = new HashMap<>();
 
@@ -18,7 +21,7 @@ public class caminhosDijuntos {
     }
 
     private void encontrarCaminhos(int atual, int destino, List<Integer> caminhoAtual,
-            List<List<Integer>> caminhosDisjuntos, Set<Integer> visitados) {
+                                   List<List<Integer>> caminhosDisjuntos, Set<Integer> visitados) {
         visitados.add(atual);
         caminhoAtual.add(atual);
 
@@ -36,8 +39,15 @@ public class caminhosDijuntos {
         caminhoAtual.remove(caminhoAtual.size() - 1);
     }
 
+    static String formatar(float valor, int qtdCasas) {
+        NumberFormat fmt = DecimalFormat.getNumberInstance();
+        fmt.setMaximumFractionDigits(qtdCasas);
+        fmt.setRoundingMode(RoundingMode.DOWN);
+        return fmt.format(valor);
+}
+
     public static void main(String[] args) throws IOException {
-        caminhosDijuntos grafo = new caminhosDijuntos();
+        caminhosDisjuntos grafo = new caminhosDisjuntos();
         Scanner sc = new Scanner(System.in);
         int quant = sc.nextInt();
         for (int i = 0; i < quant; i++) {
@@ -45,9 +55,12 @@ public class caminhosDijuntos {
         }
         sc.close();
         int origem = 0;
-        int destino = 29;
+        int destino = 39;
 
+        // Medir o tempo de execução
+        long startTime = System.currentTimeMillis();
         List<List<Integer>> caminhosDisjuntos = grafo.encontrarCaminhosDisjuntos(origem, destino);
+        long endTime = System.currentTimeMillis();
 
         // Exibir resultados
         System.out.println("Quantidade de caminhos disjuntos: " + caminhosDisjuntos.size());
@@ -55,5 +68,9 @@ public class caminhosDijuntos {
         for (List<Integer> caminho : caminhosDisjuntos) {
             System.out.println(caminho);
         }
+
+        long dif = (endTime - startTime);
+        // Exibir o tempo de execução total
+        System.out.println("Tempo total de execução: " + (formatar(dif, 20)) + " milissegundos");
     }
 }
