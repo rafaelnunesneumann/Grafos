@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Grafo {
+public class caminhosDijuntos {
 
     private Map<Integer, List<Integer>> adjacencias = new HashMap<>();
 
@@ -37,7 +37,7 @@ public class Grafo {
     }
 
     public static void main(String[] args) throws IOException {
-        Grafo grafo = new Grafo();
+        caminhosDijuntos grafo = new caminhosDijuntos();
         Scanner sc = new Scanner(System.in);
         int quant = sc.nextInt();
         for (int i = 0; i < quant; i++) {
